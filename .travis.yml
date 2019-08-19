@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - node
+  - 12
+  - 10
+  - 8
+script:
+  - export NODE_ENV=test
+  - npm run build
+  - npm run test
+after_success:
+  - export NODE_ENV=production
+  - npm run build
+notifications:
+  email: false
+sudo: false

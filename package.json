@@ -1,0 +1,38 @@
+{
+  "name": "fateadm",
+  "version": "0.1.0",
+  "description": "Unofficial SDK for FateaDM. for CAPTCHA Recognition, require payment. 🦊",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha",
+    "dev": "gulp watch",
+    "build": "rm -rf ./dist && gulp tsc"
+  },
+  "prepublish": "npm run build",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pandorym/FateaDM.git"
+  },
+  "keywords": [
+    "CAPTCHA",
+    "Recognition"
+  ],
+  "author": "Pandorym <Pandorym@foxmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pandorym/FateaDM/issues"
+  },
+  "homepage": "https://github.com/Pandorym/FateaDM#readme",
+  "devDependencies": {
+    "@types/assert": "^1.4.3",
+    "@types/mocha": "^5.2.7",
+    "assert": "^2.0.0",
+    "gulp": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^5.0.1",
+    "merge-stream": "^2.0.0",
+    "mocha": "^6.2.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
