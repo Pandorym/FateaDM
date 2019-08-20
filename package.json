@@ -1,8 +1,9 @@
 {
   "name": "fateadm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Unofficial SDK for FateaDM. for CAPTCHA Recognition, require payment. 🦊",
   "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "test": "mocha",
     "dev": "gulp watch",
