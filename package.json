@@ -1,14 +1,14 @@
 {
   "name": "fateadm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unofficial SDK for FateaDM. for CAPTCHA Recognition, require payment. 🦊",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha",
     "dev": "gulp watch",
-    "build": "rm -rf ./dist && gulp tsc"
+    "build": "rm -rf ./dist && gulp tsc",
+    "prepublish": "mocha && npm run build"
   },
-  "prepublish": "mocha && npm run build",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pandorym/FateaDM.git"
