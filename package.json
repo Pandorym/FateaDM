@@ -8,7 +8,7 @@
     "dev": "gulp watch",
     "build": "rm -rf ./dist && gulp tsc"
   },
-  "prepublish": "npm run build",
+  "prepublish": "mocha && npm run build",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pandorym/FateaDM.git"
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/Pandorym/FateaDM#readme",
   "devDependencies": {
     "@types/assert": "^1.4.3",
+    "@types/md5": "^2.1.33",
     "@types/mocha": "^5.2.7",
     "assert": "^2.0.0",
     "gulp": "^4.0.2",
@@ -34,5 +35,9 @@
     "mocha": "^6.2.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "md5": "^2.2.1"
   }
 }
