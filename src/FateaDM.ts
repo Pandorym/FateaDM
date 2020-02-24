@@ -8,8 +8,8 @@ import axios from 'axios';
 export class FateaDM {
 
     static readonly _ = axios.create({
-        baseURL : 'http://pred.fateadm.com/api/',
-        headers : { 'Content-Type' : 'application/x-www-form-urlencoded' },
+        baseURL: 'http://pred.fateadm.com/api/',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     });
 
     readonly appId: string = '315036';
@@ -49,15 +49,15 @@ export class FateaDM {
 
         return FateaDM
             ._.post('capreg', {}, {
-                params : {
-                    user_id : this.pdId,
-                    timestamp : timestamp,
-                    sign : this.sign(timestamp),
-                    app_id : this.appId,
-                    asign : this.asign(timestamp),
-                    predict_type : type,
-                    src_url : flag,
-                    img_data : img,
+                params: {
+                    user_id: this.pdId,
+                    timestamp: timestamp,
+                    sign: this.sign(timestamp),
+                    app_id: this.appId,
+                    asign: this.asign(timestamp),
+                    predict_type: type,
+                    src_url: flag,
+                    img_data: img,
                 },
             })
             .then((res) => {
@@ -65,9 +65,33 @@ export class FateaDM {
                 if (res.data.RetCode !== '0') return Promise.reject(res.data.ErrMsg);
 
                 return {
-                    RequestId : res.data.RequestId,
-                    Result : JSON.parse(res.data.RspData).result,
+                    RequestId: res.data.RequestId,
+                    Result: JSON.parse(res.data.RspData).result,
                 };
+            });
+    }
+
+    public refund(request_id: string): Promise<void> {
+        return this.reportError(request_id)
+    }
+
+    public reportError(request_id: string): Promise<void> {
+        let timestamp = FateaDM.timestamp;
+        return FateaDM
+            ._.post('capjust', {}, {
+                params: {
+                    user_id: this.pdId,
+                    timestamp: timestamp,
+                    sign: this.sign(timestamp),
+                    request_id,
+                },
+            })
+            .then((res) => {
+                if (res.status !== 200) return Promise.reject('network error.');
+
+                if (res.data.RetCode === '0') return;
+
+                return Promise.reject(res.data.ErrMsg);
             });
     }
 }
