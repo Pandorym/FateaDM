@@ -94,4 +94,23 @@ export class FateaDM {
                 return Promise.reject(res.data.ErrMsg);
             });
     }
+
+    public balance(): Promise<number> {
+        let timestamp = FateaDM.timestamp;
+        return FateaDM
+            ._.post('custval', {}, {
+                params: {
+                    user_id: this.pdId,
+                    timestamp: timestamp,
+                    sign: this.sign(timestamp),
+                },
+            })
+            .then((res) => {
+                if (res.status !== 200) return Promise.reject('network error.');
+
+                if (res.data.RetCode === '0') return JSON.parse(res.data.RspData).cust_val;
+
+                return Promise.reject(res.data.ErrMsg);
+            });
+    }
 }
