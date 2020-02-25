@@ -29,6 +29,10 @@ export class FateaDM {
         return md5(this.appId + timestamp + md5(timestamp + this.appKey));
     }
 
+    private csign(timestamp: string, cardId: string, cardKey: string) {
+        return md5(this.pdKey + timestamp + cardId + cardKey)
+    }
+
     constructor(pdId: string,
                 pdKey: string,
                 appId: string = '315036',
@@ -109,6 +113,27 @@ export class FateaDM {
                 if (res.status !== 200) return Promise.reject('network error.');
 
                 if (res.data.RetCode === '0') return JSON.parse(res.data.RspData).cust_val;
+
+                return Promise.reject(res.data.ErrMsg);
+            });
+    }
+
+    public topUp(cardId: string, cardKey: string): Promise<void> {
+        let timestamp = FateaDM.timestamp;
+        return FateaDM
+            ._.post('charge', {}, {
+                params: {
+                    user_id: this.pdId,
+                    timestamp: timestamp,
+                    sign: this.sign(timestamp),
+                    cardid: cardId,
+                    csign: this.csign(timestamp, cardId, cardKey),
+                },
+            })
+            .then((res) => {
+                if (res.status !== 200) return Promise.reject('network error.');
+
+                if (res.data.RetCode === '0') return;
 
                 return Promise.reject(res.data.ErrMsg);
             });
