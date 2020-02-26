@@ -4,6 +4,7 @@
 
 import *as md5 from 'md5';
 import axios from 'axios';
+import {FateaResult} from "./FateaResult";
 
 export class FateaDM {
 
@@ -43,7 +44,7 @@ export class FateaDM {
         this.appKey = appKey;
     }
 
-    public recognize(img: string, type: string, flag?: string): Promise<{ RequestId: string, Result: string }> {
+    public recognize(img: string, type: string, flag?: string): Promise<FateaResult> {
 
         if (typeof img === 'string' && img.startsWith('data:image')) {
             img = img.split(',').pop();
@@ -68,10 +69,10 @@ export class FateaDM {
                 if (res.status !== 200) return Promise.reject('network error.');
                 if (res.data.RetCode !== '0') return Promise.reject(res.data.ErrMsg);
 
-                return {
-                    RequestId: res.data.RequestId,
-                    Result: JSON.parse(res.data.RspData).result,
-                };
+                let Result = JSON.parse(res.data.RspData).result;
+                let ResultId = res.data.RequestId;
+
+                return new FateaResult(Result, ResultId, this);
             });
     }
 
