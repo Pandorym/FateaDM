@@ -7,7 +7,7 @@ export class FateaResult {
 
     constructor(Result: string, ResultId: string, Source: FateaDM) {
         this.Result = Result;
-        this.ResultId = Result;
+        this.ResultId = ResultId;
         this.Source = Source;
     }
 
